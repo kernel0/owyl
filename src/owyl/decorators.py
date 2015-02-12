@@ -49,6 +49,7 @@ def repeatAlways(child, **kwargs):
     """
     while True:
         yield child(**kwargs)
+        yield None
 
 @core.parent_task
 def repeatUntilFail(child, **kwargs):
@@ -62,6 +63,7 @@ def repeatUntilFail(child, **kwargs):
         result = (yield child(**kwargs))
         if result is False:
             break
+        yield None
     yield final_value
 
 @core.parent_task
@@ -76,6 +78,7 @@ def repeatUntilSucceed(child, **kwargs):
         result = (yield child(**kwargs))
         if result is True:
             break
+        yield None
     yield final_value
 
 @core.parent_task

@@ -425,7 +425,7 @@ class OwylTests(unittest.TestCase):
         self.assertEqual(result, True)
 
     def testRepeatUntilSucceed_Count(self):
-        """Does repeatUntilSucceed execute its child with every tick?
+        """Does repeatUntilSucceed return a single None after each iteration?
         """
         # How many times to repeat the behavior?
         ticks = 100
@@ -439,19 +439,19 @@ class OwylTests(unittest.TestCase):
 
         tree = owyl.repeatUntilSucceed(increment(key='count'))
         v = owyl.visit(tree, blackboard=bb)
-        for i in xrange(ticks):
-            v.next()
-        self.assertEqual(bb['count'], ticks)
+        results = [res for i, res in zip(xrange(ticks), v)]
+        self.assertEqual(bb['count'], ticks/2)
+        self.assertEqual(results, [False, None]*(ticks/2))
 
         # Need to reset the blackboard to get the same results.
         bb = blackboard.Blackboard('test', count=0)
         v = owyl.visit(tree, blackboard=bb)
-        for i in xrange(ticks):
-            v.next()
-        self.assertEqual(bb['count'], ticks)
+        results = [res for i, res in zip(xrange(ticks), v)]
+        self.assertEqual(bb['count'], ticks/2)
+        self.assertEqual(results, [False, None]*(ticks/2))
 
     def testRepeatUntilFail_Count(self):
-        """Does repeatUntilFail execute its child with every tick?
+        """Does repeatUntilFail return a single None after each iteration?
         """
         # How many times to repeat the behavior?
         ticks = 100
@@ -465,19 +465,19 @@ class OwylTests(unittest.TestCase):
 
         tree = owyl.repeatUntilFail(increment(key='count'))
         v = owyl.visit(tree, blackboard=bb)
-        for i in xrange(ticks):
-          v.next()
-        self.assertEqual(bb['count'], ticks)
+        results = [res for i, res in zip(xrange(ticks), v)]
+        self.assertEqual(bb['count'], ticks/2)
+        self.assertEqual(results, [True, None]*(ticks/2))
 
         # Need to reset the blackboard to get the same results.
         bb = blackboard.Blackboard('test', count=0)
         v = owyl.visit(tree, blackboard=bb)
-        for i in xrange(ticks):
-          v.next()
-        self.assertEqual(bb['count'], ticks)
+        results = [res for i, res in zip(xrange(ticks), v)]
+        self.assertEqual(bb['count'], ticks/2)
+        self.assertEqual(results, [True, None]*(ticks/2))
 
     def testRepeatAlways_Count(self):
-        """Does repeatAlways execute its child with every tick?
+        """Does repeatAlways return a single None after each iteration?
         """
         # How many times to repeat the behavior?
         ticks = 100
@@ -491,16 +491,16 @@ class OwylTests(unittest.TestCase):
 
         tree = owyl.repeatAlways(increment(key='count'))
         v = owyl.visit(tree, blackboard=bb)
-        for i in xrange(ticks):
-          v.next()
-        self.assertEqual(bb['count'], ticks)
+        results = [res for i, res in zip(xrange(ticks), v)]
+        self.assertEqual(bb['count'], ticks/2)
+        self.assertEqual(results, [True, None]*(ticks/2))
 
         # Need to reset the blackboard to get the same results.
         bb = blackboard.Blackboard('test', count=0)
         v = owyl.visit(tree, blackboard=bb)
-        for i in xrange(ticks):
-          v.next()
-        self.assertEqual(bb['count'], ticks)
+        results = [res for i, res in zip(xrange(ticks), v)]
+        self.assertEqual(bb['count'], ticks/2)
+        self.assertEqual(results, [True, None]*(ticks/2))
 
 
 if __name__ == "__main__":
