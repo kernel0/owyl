@@ -166,17 +166,21 @@ def visit(tree, **kwargs):
                 raise StopIteration
 
 
-@task
-def succeed(**kwargs):
-    """Always succeed.
+@parent_task
+def succeed(child=None, **kwargs):
+    """Iterate over child tree if any, but always succeed.
     """
+    if child:
+        yield child(**kwargs)
     yield True
 
 
-@task
-def fail(**kwargs):
-    """Always fail.
+@parent_task
+def fail(child=None, **kwargs):
+    """Iterate over child tree if any, but always fail.
     """
+    if child:
+        yield child(**kwargs)
     yield False
 
 
