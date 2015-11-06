@@ -19,7 +19,7 @@ from functools import wraps
 try:
     from mx.Stack import Stack, EmptyError
 except ImportError:
-    from stack import Stack, EmptyError
+    from owyl.stack import Stack, EmptyError
 
 RETURN_VALUES = set((True, False, None))
 
@@ -148,7 +148,7 @@ def visit(tree, **kwargs):
                 send_value = None
                 send_ok = False
             else:
-                child = current.next()
+                child = next(current)
 
             if child in return_values:
                 send_value = child
@@ -379,7 +379,7 @@ def parallel(*children, **kwargs):
         # Run one step on each child per iteration.
         for child in visits.keys():
             try:
-                result = child.next()
+                result = next(child)
                 visits[child] = result
             except StopIteration:
                 lastval = visits[child]

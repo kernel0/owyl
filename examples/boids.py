@@ -564,7 +564,7 @@ class Boid(Steerable):
         @type dt: C{float} seconds.
         """
         self.bb['dt'] = dt
-        self.tree.next()
+        next(self.tree)
 
 
 class BoidLayer(ScrollableLayer):
@@ -583,7 +583,7 @@ class BoidLayer(ScrollableLayer):
 
     def makeBoids(self):
         boids = []
-        for x in xrange(int(self.how_many)):
+        for x in range(int(self.how_many)):
             boid = Boid(self.blackboard)
             boid.position = (random.randint(0, 200),
                              random.randint(0, 200))

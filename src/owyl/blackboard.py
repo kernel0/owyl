@@ -17,7 +17,7 @@ __date__ = "$Date$"[7:-2]
 
 from collections import defaultdict
 
-import core
+import owyl.core as core
 
 __all__ = ['Blackboard', 'checkBB', 'setBB', ]
 

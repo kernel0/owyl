@@ -16,7 +16,7 @@ __date__ = "$Date$"[7:-2]
 
 import time
 
-import core
+import owyl.core as core
 
 __all__ = ['identity', 'repeatUntilFail', 'repeatUntilSucceed',
            'flip', 'repeatAlways', 'limit']
@@ -98,5 +98,5 @@ def limit(child, **kwargs):
             yield None
             continue
         last_run = nowtime()
-        result = visitor.next()
+        result = next(visitor)
         yield result
